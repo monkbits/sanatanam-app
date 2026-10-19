@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Sanatanam</string>
+    <string name="nav_text_label_1">Home</string>
+    <string name="nav_text_label_2">Setting</string>
+    <string name="wallpaper">wallpaper</string>
+    <string name="quotes">Quotes</string>
+    <string name="verse1">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</string>
+    <string name="read_geeta">Read Geeta</string>
+    <string name="geeta">Geeta</string>
+</resources>
