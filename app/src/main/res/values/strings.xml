@@ -7,4 +7,9 @@
     <string name="verse1">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</string>
     <string name="read_geeta">Read Geeta</string>
     <string name="geeta">Geeta</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_policy_page">Privacy Policy</string>
+    <string name="setting_icon">setting icon</string>
+    <string name="settings">Settings</string>
+    <string name="version">V1.0.0</string>
 </resources>

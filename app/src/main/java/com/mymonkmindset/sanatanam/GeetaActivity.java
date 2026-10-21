@@ -1,20 +1,34 @@
 package com.mymonkmindset.sanatanam;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.mymonkmindset.sanatanam.adapters.GeetaChapterAdapter;
 import com.mymonkmindset.sanatanam.interfaces.SelectItemInterface;
 import com.mymonkmindset.sanatanam.models.Chapter;
 import com.mymonkmindset.sanatanam.models.Verse;
+import com.mymonkmindset.sanatanam.utils.AssetUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GeetaActivity extends AppCompatActivity implements SelectItemInterface {
@@ -29,146 +43,66 @@ public class GeetaActivity extends AppCompatActivity implements SelectItemInterf
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_geeta);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
         gatherResources();
         loadChapters();
-
         setOnClickListeners();
-
-
     }
+
 
     private void loadChapters() {
         RecyclerView rvGeetaChapters = findViewById(R.id.rvGeetaChapters);
         if (rvGeetaChapters == null) return;
 
-        chapters = new ArrayList<>();
         rvGeetaChapters.setLayoutManager(new LinearLayoutManager(this));
-        String scriptureName = "bhagwat geeta";
-        int[] count = {1};
-        chapters.addAll(List.of(
-//           Chapter.builder().chapterTitle("अर्जुनविषाद योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("अर्जुनविषाद योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("सांख्य योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("कर्म योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("ज्ञानकर्मसंन्यास योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("कर्मसंन्यास योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("आत्मसंयम योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("ज्ञानविज्ञान योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("अक्षरब्रह्म योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("राजविद्याराजगुह्य योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("विभूति योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("विश्वरूपदर्शन योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("भक्ति योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("क्षेत्र-क्षेत्रज्ञविभाग योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("गुणत्रयविभाग योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("पुरुषोत्तम योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("दैवासुरसम्पद्विभाग योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("श्रद्धात्रयविभाग योग").build(),
-           Chapter.builder()
-                   .chapterNumber(String.valueOf(count[0]++))
-                   .verses(List.of())
-                   .scriptureTitle(scriptureName)
-                   .chapterTitle("मोक्षसंन्यास योग").build()
+        chapters = new ArrayList<>();
 
-        ));
+        String scriptureName = "श्रीमद्भगवद्गीता";
 
-        for (int i = 0; i < chapters.size(); i++) {
-            List<Verse> versesAll = new ArrayList<>();
-            for (int j = 0; j < 10; j++) {
-                versesAll.add(Verse.builder()
-                        .title("verse Title")
-                        .lines(List.of(""))
-                        .translation("translation in hindi")
-                        .reference("some reference")
-                        .scriptureTitle("sculpture Title")
-                        .build());
-            }
-            Chapter c = chapters.get(i);
-            c.setVerses(versesAll);
-            chapters.set(i, c);
+        List<String> chapterTitles = List.of(
+                "अर्जुनविषाद योग",
+                "सांख्य योग",
+                "कर्म योग",
+                "ज्ञानकर्मसंन्यास योग",
+                "कर्मसंन्यास योग",
+                "आत्मसंयम योग",
+                "ज्ञानविज्ञान योग",
+                "अक्षरब्रह्म योग",
+                "राजविद्याराजगुह्य योग",
+                "विभूति योग",
+                "विश्वरूपदर्शन योग",
+                "भक्ति योग",
+                "क्षेत्र-क्षेत्रज्ञविभाग योग",
+                "गुणत्रयविभाग योग",
+                "पुरुषोत्तम योग",
+                "दैवासुरसम्पद्विभाग योग",
+                "श्रद्धात्रयविभाग योग",
+                "मोक्षसंन्यास योग"
+        );
+
+        // Build the 18 chapters cleanly
+        for (int i = 0; i < chapterTitles.size(); i++) {
+            chapters.add(Chapter.builder()
+                    .chapterNumber(String.valueOf(i + 1))
+                    .chapterTitle(chapterTitles.get(i))
+                    .scriptureTitle(scriptureName)
+                    .build());
         }
+
         GeetaChapterAdapter adapter = new GeetaChapterAdapter(chapters);
         rvGeetaChapters.setAdapter(adapter);
 
-        // ✅ Adapter इत्यस्य माध्यमेन Listener योज्यताम्, न तु rvGeetaChapters इत्यस्य उपरि:
         adapter.setOnItemClickListener((chapter, position) -> {
-            GeetaActivity.readingChapter = position;
-//            Toast.makeText(this, "चितः अध्यायः: " + chapter.getChapterTitle(), Toast.LENGTH_SHORT).show();
-
             Intent intent = new Intent(GeetaActivity.this, ReadVersesActivity.class);
+            // Pass 1-based chapter number (1 to 18)
+            intent.putExtra("EXTRA_CHAPTER_NUMBER", position + 1);
+            intent.putExtra("EXTRA_CHAPTER_TITLE", chapter.getChapterTitle());
             startActivity(intent);
-            // नूतन-Activity उद्घाटनाय:
-            // Intent intent = new Intent(this, ChapterDetailActivity.class);
-            // intent.putExtra("CHAPTER_NUM", geetaChapter.getChapterNumber());
-            // startActivity(intent);
         });
     }
 
@@ -180,5 +114,9 @@ public class GeetaActivity extends AppCompatActivity implements SelectItemInterf
     @Override
     public void setOnClickListeners() {
 
+    }
+
+    public List<Verse> loadChapterFromAssets(Context context, int chapterNum) {
+        return AssetUtils.loadVersesFromAssets(context, "chapter_" + chapterNum + ".json");
     }
 }

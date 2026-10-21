@@ -20,17 +20,19 @@ import com.google.android.material.carousel.CarouselSnapHelper;
 import com.google.android.material.carousel.MultiBrowseCarouselStrategy;
 import com.mymonkmindset.sanatanam.adapters.CarouselAdapter;
 import com.mymonkmindset.sanatanam.adapters.VerseAdapter;
+import com.mymonkmindset.sanatanam.interfaces.SelectItemInterface;
 import com.mymonkmindset.sanatanam.models.FirstCarouselCard;
 import com.mymonkmindset.sanatanam.models.Verse;
+import com.mymonkmindset.sanatanam.utils.AssetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SelectItemInterface {
     private RecyclerView carousel;
     private List<FirstCarouselCard> list;
     private ShimmerFrameLayout shimmerFrameLayout;
-    private Button geetaBtn;
+    private Button geetaBtn, settingIconBtn;
 
     private List<Verse> verseList;
 
@@ -48,16 +50,27 @@ public class MainActivity extends AppCompatActivity {
         createCarousel();
         createQuotes();
         gatherResources();
-        setOnClick();
+        setOnClickListeners();
 //        ShimmerFrameLayout container =
 //                (ShimmerFrameLayout) findViewById(R.id.shimmer);
 //        container.startShimmer();
     }
 
-    private void gatherResources(){
+    public void gatherResources(){
         geetaBtn = findViewById(R.id.btnGeeta);
+        settingIconBtn = findViewById(R.id.settingIconBtn);
     }
-    private void setOnClick(){
+
+    @Override
+    public void setOnClickListeners() {
+        settingIconBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         geetaBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -70,27 +83,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void createQuotes(){
         RecyclerView rvQuotes = findViewById(R.id.rvQuotes);
+        if (rvQuotes == null) return;
         rvQuotes.setLayoutManager(new LinearLayoutManager(this));
         rvQuotes.setNestedScrollingEnabled(false);
-        verseList = new ArrayList<>();
-        verseList.add(Verse.builder()
-                        .reference("अध्याय 6, श्लोक 5")
-                        .lines(List.of("उद्धरेदात्मनात्मानं नात्मानमवसादयेत्।", "आत्मैव ह्यात्मनो बन्धुरात्मैव रिपुरात्मनः॥"))
-                        .translation("अपने द्वारा अपना उद्धार करे, अपना पतन न करे। क्योंकि आप ही अपने मित्र हैं और आप ही अपने शत्रु हैं।")
-                        .title("आत्म उद्धार")
-                .build());
-        verseList.add(Verse.builder()
-                .reference("अध्याय 2, श्लोक 47")
-                .lines(List.of("कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।", "मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥"))
-                .translation("तुम्हारा अधिकार केवल कर्म करने पर है, उसके फलों पर कभी नहीं।")
-                .title("कर्म योग")
-                .build());
-        verseList.add(Verse.builder()
-                .reference("मुण्डक उपनिषद् 3.1.6")
-                .lines(List.of("सत्यमेव जयते नानृतम्॥"))
-                .translation("सत्य की ही विजय होती है, असत्य की नहीं।")
-                .title("सत्यमेव जयते")
-                .build());
+
+        verseList = AssetUtils.loadVersesFromAssets(this, "chapter_1.json");
+        if (verseList == null || verseList.isEmpty()) {
+            verseList = new ArrayList<>();
+            verseList.add(Verse.builder()
+                    .reference("अध्याय 6, श्लोक 5")
+                    .lines(List.of("उद्धरेदात्मनात्मानं नात्मानमवसादयेत्।", "आत्मैव ह्यात्मनो बन्धुरात्मैव रिपुरात्मनः॥"))
+                    .translation("अपने द्वारा अपना उद्धार करे, अपना पतन न करे। क्योंकि आप ही अपने मित्र हैं और आप ही अपने शत्रु हैं।")
+                    .title("आत्म उद्धार")
+                    .build());
+            verseList.add(Verse.builder()
+                    .reference("अध्याय 2, श्लोक 47")
+                    .lines(List.of("कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।", "मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥"))
+                    .translation("तुम्हारा अधिकार केवल कर्म करने पर है, उसके फलों पर कभी नहीं।")
+                    .title("कर्म योग")
+                    .build());
+            verseList.add(Verse.builder()
+                    .reference("मुण्डक उपनिषद् 3.1.6")
+                    .lines(List.of("सत्यमेव जयते नानृतम्॥"))
+                    .translation("सत्य की ही विजय होती है, असत्य की नहीं।")
+                    .title("सत्यमेव जयते")
+                    .build());
+        }
         rvQuotes.setAdapter(new VerseAdapter(verseList));
     }
 
