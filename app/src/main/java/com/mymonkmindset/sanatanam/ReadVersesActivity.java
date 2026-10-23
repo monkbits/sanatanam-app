@@ -2,6 +2,7 @@ package com.mymonkmindset.sanatanam;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import com.mymonkmindset.sanatanam.utils.AssetUtils;
 
 import java.util.List;
 
-public class ReadVersesActivity extends AppCompatActivity implements SelectItemInterface {
+public class ReadVersesActivity extends BottomMenuActivity implements SelectItemInterface {
 
     private TextView pageTitle;
     private RecyclerView verseRecycleView;
@@ -35,6 +36,8 @@ public class ReadVersesActivity extends AppCompatActivity implements SelectItemI
             return insets;
         });
 
+        initPrefs(this);
+        initBottomNav();
         gatherResources();
         setOnClickListeners();
 
@@ -47,8 +50,10 @@ public class ReadVersesActivity extends AppCompatActivity implements SelectItemI
         }
 
         // 2. Load the corresponding chapter JSON from assets
-        String fileName = "chapter_" + chapterNum + ".json";
-        List<Verse> verses = AssetUtils.loadVersesFromAssets(this, fileName);
+        String lang = getPref("translation_language");
+        if (lang == null || lang.trim().isEmpty()) lang = "en";
+        String path = "geeta/" + lang + "/chapter_" + chapterNum + ".json";
+        List<Verse> verses = AssetUtils.loadVersesFromPath(this, path);
 
         // 3. Bind to RecyclerView once
         verseRecycleView.setLayoutManager(new LinearLayoutManager(this));

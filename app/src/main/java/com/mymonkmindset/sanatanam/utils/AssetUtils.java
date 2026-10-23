@@ -16,7 +16,22 @@ import java.util.List;
 
 public class AssetUtils {
     public static List<Verse> loadVersesFromAssets(Context context, String fileName) {
-        String path = fileName.startsWith("chapters/") ? fileName : "chapters/" + fileName;
+        String path = fileName.startsWith("geeta/") ? fileName : "geeta/" + fileName;
+        try (InputStream is = context.getAssets().open(path);
+             Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+
+            Type listType = new TypeToken<List<Verse>>() {}.getType();
+            List<Verse> verses = new Gson().fromJson(reader, listType);
+            return verses != null ? verses : Collections.emptyList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
+
+
+    public static List<Verse> loadVersesFromPath(Context context, String path) {
         try (InputStream is = context.getAssets().open(path);
              Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
 

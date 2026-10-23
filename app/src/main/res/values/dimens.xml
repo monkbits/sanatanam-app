@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Standard Material 3 default is 80dp; custom compact heights are typically 56dp - 64dp -->
+    <dimen name="nav_bar_height_token">60dp</dimen>
+
+    <!-- Optional: adjust icon/indicator bounds if making the bar compact -->
+    <dimen name="nav_indicator_height_token">32dp</dimen>
+</resources>

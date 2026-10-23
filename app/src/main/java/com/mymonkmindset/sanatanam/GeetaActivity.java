@@ -28,10 +28,11 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GeetaActivity extends AppCompatActivity implements SelectItemInterface {
+public class GeetaActivity extends BottomMenuActivity implements SelectItemInterface {
 
     public static int readingChapter = 0;
     private RecyclerView rvGeetaChapters;
@@ -49,6 +50,8 @@ public class GeetaActivity extends AppCompatActivity implements SelectItemInterf
             return insets;
         });
 
+        initPrefs(this);
+        initBottomNav();
         gatherResources();
         loadChapters();
         setOnClickListeners();
@@ -60,39 +63,7 @@ public class GeetaActivity extends AppCompatActivity implements SelectItemInterf
         if (rvGeetaChapters == null) return;
 
         rvGeetaChapters.setLayoutManager(new LinearLayoutManager(this));
-        chapters = new ArrayList<>();
-
-        String scriptureName = "श्रीमद्भगवद्गीता";
-
-        List<String> chapterTitles = List.of(
-                "अर्जुनविषाद योग",
-                "सांख्य योग",
-                "कर्म योग",
-                "ज्ञानकर्मसंन्यास योग",
-                "कर्मसंन्यास योग",
-                "आत्मसंयम योग",
-                "ज्ञानविज्ञान योग",
-                "अक्षरब्रह्म योग",
-                "राजविद्याराजगुह्य योग",
-                "विभूति योग",
-                "विश्वरूपदर्शन योग",
-                "भक्ति योग",
-                "क्षेत्र-क्षेत्रज्ञविभाग योग",
-                "गुणत्रयविभाग योग",
-                "पुरुषोत्तम योग",
-                "दैवासुरसम्पद्विभाग योग",
-                "श्रद्धात्रयविभाग योग",
-                "मोक्षसंन्यास योग"
-        );
-
-        // Build the 18 chapters cleanly
-        for (int i = 0; i < chapterTitles.size(); i++) {
-            chapters.add(Chapter.builder()
-                    .chapterNumber(String.valueOf(i + 1))
-                    .chapterTitle(chapterTitles.get(i))
-                    .scriptureTitle(scriptureName)
-                    .build());
-        }
+        loadChaptersData();
 
         GeetaChapterAdapter adapter = new GeetaChapterAdapter(chapters);
         rvGeetaChapters.setAdapter(adapter);
@@ -104,6 +75,102 @@ public class GeetaActivity extends AppCompatActivity implements SelectItemInterf
             intent.putExtra("EXTRA_CHAPTER_TITLE", chapter.getChapterTitle());
             startActivity(intent);
         });
+    }
+
+    public void loadChaptersData(){
+        chapters = new ArrayList<>();
+
+        String lang = getPref("translation_language");
+        if (lang == null || lang.trim().isEmpty()) {
+            lang = "en";
+        }
+
+        String scriptureName;
+        List<String> chapterTitles;
+
+        switch (lang.toLowerCase()) {
+            case "hi":
+                scriptureName = "श्रीमद्भगवद्गीता";
+                chapterTitles = Arrays.asList(
+                        "अर्जुनविषाद योग",
+                        "सांख्य योग",
+                        "कर्म योग",
+                        "ज्ञानकर्मसंन्यास योग",
+                        "कर्मसंन्यास योग",
+                        "आत्मसंयम योग",
+                        "ज्ञानविज्ञान योग",
+                        "अक्षरब्रह्म योग",
+                        "राजविद्याराजगुह्य योग",
+                        "विभूति योग",
+                        "विश्वरूपदर्शन योग",
+                        "भक्ति योग",
+                        "क्षेत्र-क्षेत्रज्ञविभाग योग",
+                        "गुणत्रयविभाग योग",
+                        "पुरुषोत्तम योग",
+                        "दैवासुरसम्पद्विभाग योग",
+                        "श्रद्धात्रयविभाग योग",
+                        "मोक्षसंन्यास योग"
+                );
+                break;
+
+            case "hi-en":
+                scriptureName = "Srimad Bhagavad Gita";
+                chapterTitles = Arrays.asList(
+                        "Arjuna Vishada Yoga",
+                        "Sankhya Yoga",
+                        "Karma Yoga",
+                        "Jnana Karma Sannyasa Yoga",
+                        "Karma Sannyasa Yoga",
+                        "Atma Samyama Yoga",
+                        "Jnana Vijnana Yoga",
+                        "Aksara Brahma Yoga",
+                        "Raja Vidya Raja Guhya Yoga",
+                        "Vibhuti Yoga",
+                        "Vishwarupa Darshana Yoga",
+                        "Bhakti Yoga",
+                        "Kshetra Kshetrajna Vibhaga Yoga",
+                        "Gunatraya Vibhaga Yoga",
+                        "Purushottama Yoga",
+                        "Daivasura Sampad Vibhaga Yoga",
+                        "Shraddhatraya Vibhaga Yoga",
+                        "Moksha Sannyasa Yoga"
+                );
+                break;
+
+            case "en":
+            default:
+                scriptureName = "Bhagavad Gita";
+                chapterTitles = Arrays.asList(
+                        "The Grief of Arjuna",
+                        "The Yoga of Knowledge",
+                        "The Yoga of Action",
+                        "The Yoga of Renunciation of Action through Knowledge",
+                        "The Yoga of Renunciation",
+                        "The Yoga of Meditation",
+                        "The Yoga of Knowledge and Realization",
+                        "The Yoga of the Imperishable Brahman",
+                        "The Yoga of Sovereign Science and Sovereign Secret",
+                        "The Yoga of Divine Glories",
+                        "The Yoga of the Vision of the Universal Form",
+                        "The Yoga of Devotion",
+                        "The Yoga of Distinction Between Field and Knower",
+                        "The Yoga of the Three Gunas",
+                        "The Yoga of the Supreme Divine Personality",
+                        "The Yoga of the Division Between Divine and Demonic Natures",
+                        "The Yoga of the Threefold Faith",
+                        "The Yoga of Liberation by Renunciation"
+                );
+                break;
+        }
+
+        // Build the 18 chapters
+        for (int i = 0; i < chapterTitles.size(); i++) {
+            chapters.add(Chapter.builder()
+                    .chapterNumber(String.valueOf(i + 1))
+                    .chapterTitle(chapterTitles.get(i))
+                    .scriptureTitle(scriptureName)
+                    .build());
+        }
     }
 
     @Override

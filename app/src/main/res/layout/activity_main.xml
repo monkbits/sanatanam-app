@@ -7,29 +7,41 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        tools:ignore="ScrollViewCount">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <!-- Header -->
+    <include
+        android:id="@+id/header"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        layout="@layout/component_header" />
 
-            <!--   Header     -->
-            <include
-                android:id="@+id/header"
+    <!-- Scrollable Content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingVertical="30dp">
+
+            <!-- Carousel Box -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/carouselBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/component_header" />
-
-            <!--    carousel    -->
-            <LinearLayout
-                android:id="@+id/carouselBox"
                 android:paddingVertical="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                app:cardBackgroundColor="#00000000"
+                app:cardElevation="0dp">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCarousel"
                     android:layout_width="match_parent"
@@ -37,34 +49,52 @@
                     android:clipChildren="false"
                     android:clipToPadding="false"
                     android:paddingHorizontal="16dp" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:padding="20dp"
-                app:layout_constraintTop_toBottomOf="@id/carouselBox"
-                app:layout_constraintBottom_toTopOf="@id/quotesbox"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <com.google.android.material.divider.MaterialDivider
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:dividerInsetStart="16dp"
-                    app:dividerInsetEnd="16dp"/>
+            </androidx.cardview.widget.CardView>
 
-                <com.google.android.material.button.MaterialButton
-                    style="?attr/materialButtonOutlinedStyle"
-                    android:layout_marginTop="30dp"
-                    android:id="@+id/btnGeeta"
-                    android:text="@string/read_geeta"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-            <include
-                android:id="@+id/quotesbox"
+            <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                layout="@layout/cm_main_rvquotes"/>
+                android:layout_marginVertical="30dp"
+                app:dividerInsetEnd="16dp"
+                app:dividerColor="@color/light_1"
+                app:dividerInsetStart="16dp" />
+
+            <!-- Read Geeta Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardReadGeeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardElevation="0dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="20dp"
+                    android:text="Chapters of Geeta"
+                    android:textSize="18sp" />
+            </com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/tvExplain"
+                android:layout_margin="30dp"
+                app:fontFamily="sans-serif-medium"
+                android:textColor="@color/color_blue_dark"
+                android:text="@string/explain_geeta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Navigation -->
+    <include
+        android:id="@+id/bottom_nav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        layout="@layout/cm_bottom_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

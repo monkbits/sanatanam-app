@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">Sanatanam</string>
     <string name="nav_text_label_1">Home</string>
-    <string name="nav_text_label_2">Setting</string>
-    <string name="wallpaper">wallpaper</string>
+    <string name="nav_text_label_2">Settings</string>
+    <string name="wallpaper">Wallpaper</string>
     <string name="quotes">Quotes</string>
     <string name="verse1">कर्मण्येवाधिकारस्ते मा फलेषु कदाचन। मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि॥</string>
     <string name="read_geeta">Read Geeta</string>
     <string name="geeta">Geeta</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_policy_page">Privacy Policy</string>
-    <string name="setting_icon">setting icon</string>
+    <string name="setting_icon">Settings</string>
     <string name="settings">Settings</string>
-    <string name="version">V1.0.0</string>
+    <string name="version">Version 2.0.4</string>
+    <string name="explain_geeta">Read the complete Srimad Bhagavad Gita offline. Access all 18 chapters and 700 verses with original Sanskrit shlokas and clear translations in Hindi, English, and Hinglish anytime, anywhere.</string>
 </resources>

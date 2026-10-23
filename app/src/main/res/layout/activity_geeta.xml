@@ -4,30 +4,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GeetaActivity">
-
-    <!-- 1. Page Header (Direct Include) -->
+    <!--   page title -->
     <include
-        android:id="@+id/pageHeader"
-        layout="@layout/cm_page_title"
-        android:layout_width="0dp"
+        android:id="@+id/cm_page_title_include"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        layout="@layout/cm_page_title" />
 
-    <!-- 2. Geeta Chapters Content (Takes all remaining screen height) -->
+    <!--   Header     -->
     <include
-        android:id="@+id/rvGeetaChaptersBox"
-        layout="@layout/cm_geeta"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pageHeader" />
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/component_header" />
+    <!-- 2. Geeta Chapters Content (Takes all remaining screen height) -->
+    <FrameLayout
+        app:layout_constraintTop_toBottomOf="@id/cm_page_title_include"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_include"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <include
+            app:layout_constraintTop_toBottomOf="parent"
+            android:id="@+id/rvGeetaChaptersBox"
+            layout="@layout/cm_geeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </FrameLayout>
 
+    <!--   Bottom nav    -->
+    <include
+        android:id="@+id/bottom_nav_include"
+        layout="@layout/cm_bottom_nav"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

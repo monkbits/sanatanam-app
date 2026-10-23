@@ -47,7 +47,15 @@ public class VerseAdapter extends RecyclerView.Adapter<VerseAdapter.VerseViewHol
         }
 
         if (verse.getLines() != null && !verse.getLines().isEmpty()) {
-            holder.tvVerseLines.setText(String.join("\n", verse.getLines()));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < verse.getLines().size(); i++) {
+                String line = verse.getLines().get(i);
+                if (line != null) {
+                    if (sb.length() > 0) sb.append("\n");
+                    sb.append(line);
+                }
+            }
+            holder.tvVerseLines.setText(sb.toString());
             holder.tvVerseLines.setVisibility(View.VISIBLE);
         } else {
             holder.tvVerseLines.setVisibility(View.GONE);

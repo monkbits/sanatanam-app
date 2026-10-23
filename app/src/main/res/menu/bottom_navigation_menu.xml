@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!--Not in use -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_1"
         android:enabled="true"
         android:icon="@drawable/ic_home"
-        android:title="@string/nav_text_label_1"/>
+        android:title="@string/app_name"/>
     <item
         android:id="@+id/item_2"
         android:enabled="true"
-        android:icon="@drawable/ic_setting"
-        android:title="@string/nav_text_label_2"/>
+        android:icon="@drawable/ic_bookmark"
+        android:title="@string/app_name"/>
 </menu>

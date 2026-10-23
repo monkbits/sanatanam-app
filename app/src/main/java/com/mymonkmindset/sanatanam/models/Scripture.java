@@ -14,6 +14,8 @@ import lombok.ToString;
 @ToString
 @Builder
 public class Scripture {
+    private Long id;
     private String title;
-    private List<Chapter> chapterList;
+    private String category;
+    private List<Chapter> chapters;
 }

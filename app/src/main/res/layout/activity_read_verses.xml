@@ -3,33 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ReadVersesActivity">
-    <LinearLayout
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:background="@color/color_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <include
-                android:id="@+id/pageTitleBox"
-                layout="@layout/cm_page_title"
-                />
-        </LinearLayout>
+    <!--   page title -->
+    <include
+        android:id="@+id/cm_page_title_include"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/cm_page_title" />
+
+    <!--   Header     -->
+    <include
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/component_header" />
+
+    <!-- 2. Geeta Chapters Content (Takes all remaining screen height) -->
+    <FrameLayout
+        app:layout_constraintTop_toBottomOf="@id/cm_page_title_include"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_include"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
         <include
             android:id="@+id/rvReadVersesBox"
             layout="@layout/cm_rv_read_verses"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+    </FrameLayout>
 
-    </LinearLayout>
+
+    <!--   Bottom nav    -->
+    <include
+        android:id="@+id/bottom_nav_include"
+        layout="@layout/cm_bottom_nav"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
